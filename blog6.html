@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Solo Travel is the Ultimate Journey</title>
+    <link rel="stylesheet" href="blog1.css">
+    <style>
+        .like-button {
+            background: linear-gradient(135deg, #de4dcf, #00b8ff);
+            color: #e0e0ff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .like-button:hover {
+            background: linear-gradient(135deg, #e7a52a, #a1e547);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .like-button.liked {
+            animation: pulse 0.5s ease;
+        }
+
+        .like-counter {
+            background: rgba(15, 15, 35, 0.7);
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .like-counter:hover {
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .like-count-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #00f7ff;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+            line-height: 1;
+        }
+
+        .like-count-label {
+            font-size: 1rem;
+            color: #e0e0ff;
+            margin-top: 5px;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .comment-form textarea {
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: #00b8ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-button:hover {
+            background: #00ff9d;
+        }
+
+        .comment {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f1f1f1;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .comment-body {
+            color: #333;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Why Solo Travel is the Ultimate Journey</h1>
+        <nav>
+            <a href="Website/trail.html">Home</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="blog-full">
+        <!-- <img src="images/solo_travel.jpg" alt="Solo Travel Adventure" class="blog-image"> -->
+        <p class="blog-meta">Published on June 21, 2025 | By Blog &beyond</p>
+
+        <h2>Introduction</h2>
+        <p>Solo travel is more than just exploring new places — it’s a personal transformation. When you travel alone, you learn to rely on yourself, embrace independence, and discover who you truly are.</p>
+
+        <h2>1. Self-Discovery</h2>
+        <p>Without the influence of others, you begin to understand your likes, dislikes, and priorities. You travel on your terms, make spontaneous decisions, and grow from every moment.</p>
+
+        <h2>2. Freedom and Flexibility</h2>
+        <p>Want to skip a museum and chase a sunset instead? Solo travel allows you to follow your own rhythm, without compromise or coordination.</p>
+
+        <h2>3. Building Confidence</h2>
+        <p>Navigating unfamiliar places, managing finances, and solving problems on your own builds lasting confidence and resilience.</p>
+
+        <h2>4. Meeting New People</h2>
+        <p>Ironically, traveling solo often leads to deeper human connections. Locals and fellow travelers are more likely to engage with solo explorers, leading to unforgettable friendships.</p>
+
+        <h2>5. Overcoming Fear</h2>
+        <p>Solo travel challenges you to step outside your comfort zone. The initial fear fades as you're empowered by new experiences and success in navigating the unknown.</p>
+
+        <h2>Conclusion</h2>
+        <p>If you're thinking about solo travel — go for it. It will test you, teach you, and change you. You may arrive alone, but you'll return with a new version of yourself.</p>
+
+        <div class="blog-interactions">
+            <div class="like-section">
+                <div class="like-counter">
+                    <span class="like-count-number" id="likeCountDisplay">0</span>
+                    <span class="like-count-label">Likes</span>
+                </div>
+                <button id="likeButton" class="like-button">
+                    <span class="like-icon">🌍</span>
+                    <span id="likeCount">0</span> Likes
+                </button>
+            </div>
+
+            <div class="comment-section">
+                <h3>Comments</h3>
+                <div id="commentsList" class="comments-list"></div>
+                <form id="commentForm" class="comment-form">
+                    <input type="text" id="commenterName" placeholder="Your Name" required>
+                    <textarea id="commentText" placeholder="Your Comment" required></textarea>
+                    <button type="submit" class="submit-button">Post Comment</button>
+                </form>
+            </div>
+        </div>
+
+        <a href="Website/trail.html" class="back-button">Back to Home</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Blog &beyond. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const blogId = 'blog8';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const likes = localStorage.getItem(`${blogId}_likes`) || '0';
+            document.getElementById('likeCount').textContent = likes;
+            document.getElementById('likeCountDisplay').textContent = likes;
+
+            const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+            displayComments(comments);
+
+            document.getElementById('likeButton').addEventListener('click', handleLike);
+            document.getElementById('commentForm').addEventListener('submit', handleComment);
+        });
+
+        function handleLike() {
+            const likeCountEl = document.getElementById('likeCount');
+            const likeDisplayEl = document.getElementById('likeCountDisplay');
+            let currentLikes = parseInt(localStorage.getItem(`${blogId}_likes`) || '0');
+            currentLikes++;
+
+            likeCountEl.textContent = currentLikes;
+            likeDisplayEl.textContent = currentLikes;
+            localStorage.setItem(`${blogId}_likes`, currentLikes.toString());
+
+            const likeButton = document.getElementById('likeButton');
+            likeButton.classList.add('liked');
+            setTimeout(() => likeButton.classList.remove('liked'), 1000);
+        }
+
+        function handleComment(event) {
+            event.preventDefault();
+            const name = document.getElementById('commenterName').value.trim();
+            const comment = document.getElementById('commentText').value.trim();
+            if (!name || !comment) return;
+
+            const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+            comments.push({ name, comment, date: new Date().toISOString() });
+            localStorage.setItem(`${blogId}_comments`, JSON.stringify(comments));
+
+            document.getElementById('commenterName').value = '';
+            document.getElementById('commentText').value = '';
+            displayComments(comments);
+        }
+
+        function displayComments(comments) {
+            const container = document.getElementById('commentsList');
+            container.innerHTML = comments.map(c => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <strong>${c.name}</strong>
+                        <span class="comment-date">${new Date(c.date).toLocaleDateString()}</span>
+                    </div>
+                    <div class="comment-body">${c.comment}</div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

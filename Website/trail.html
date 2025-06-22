@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog & Beyond</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Lato:300,400" rel="stylesheet">
+  <link rel="stylesheet" href="trial.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    .comment {
+      position: relative;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .delete-comment {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: #ff4444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .delete-comment:hover {
+      background: #cc0000;
+    }
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .user-profile span {
+      color: #1e3c72;
+      font-weight: 500;
+    }
+    .profile-link {
+      padding: 8px 15px;
+      background: linear-gradient(45deg, #1e3c72, #2a5298);
+      color: white;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .profile-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    #logoutBtn {
+      padding: 8px 15px;
+      background: #ff4444;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    #logoutBtn:hover {
+      background: #cc0000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .add-blog-button {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #1e3c72, #2a5298);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+    }
+
+    .add-blog-button:hover {
+      transform: rotate(90deg) scale(1.1);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    .back-to-top {
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1e3c72;
+      font-size: 20px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: fixed;
+      bottom: 110px;
+      right: 35px;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 768px) {
+      .add-blog-button {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .back-to-top {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        bottom: 90px;
+        right: 25px;
+      }
+    }
+
+    /* Add delete button styles */
+    .delete-blog {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 68, 68, 0.9);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      opacity: 0;
+      z-index: 10;
+    }
+
+    .post-card {
+      position: relative;
+    }
+
+    .post-card:hover .delete-blog {
+      opacity: 1;
+    }
+
+    .delete-blog:hover {
+      background: #ff0000;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .delete-blog {
+        opacity: 1;
+        width: 32px;
+        height: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="preloader">
+    <div class="spinner"></div>
+  </div>
+
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <a href="#">Blog & Beyond</a>
+      </div>
+      <nav>
+        <ul class="navigation">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#posts">Posts</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-search">
+        <input type="text" placeholder="Search posts..." />
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="header-login">
+        <script>
+          const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+          const userName = localStorage.getItem('userName') || 'Guest';
+
+          if (isLoggedIn) {
+            document.write(`
+              <div class="user-profile">
+                <span>Welcome, ${userName}</span>
+                <a href="profile.html" class="profile-link">
+                  <i class="fas fa-user"></i> Profile
+                </a>
+                <button id="logoutBtn" onclick="handleLogout()">
+                  <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+              </div>
+            `);
+          } else {
+            document.write(`
+              <a href="../newLogin.html">
+                <button id="loginBtn" class="profile-link">
+                  <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+              </a>
+            `);
+          }
+        </script>
+      </div>
+    </div>
+  </header>
+
+  
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-image">
+      <img src="Hero.jpg" alt="Hero Image">
+    </div>
+    <div class="hero-content">
+      <h1>Welcome to Blog & Beyond</h1>
+      <p>Your hub for the latest insights, trends, and stories</p>
+      <a href="#posts" class="btn">Explore Posts</a>
+    </div>
+  </section>
+
+  
+  <section id="features">
+    <div class="container">
+      <h2 class="section-title">Our Features</h2>
+      <div class="features-grid">
+        <div class="feature">
+          <i class="icon icon-responsive"></i>
+          <h3>Responsive Design</h3>
+          <p>Looks amazing on any device.</p>
+        </div>
+        <div class="feature">
+          <i class="icon icon-speed"></i>
+          <h3>Fast Performance</h3>
+          <p>Optimized to load quickly for all users.</p>
+        </div>
+        <div class="feature">
+          <i class="icon icon-custom"></i>
+          <h3>Easy Customization</h3>
+          <p>Tailor your experience to match your style.</p>
+        </div>
+        <div class="feature">
+          <i class="icon icon-support"></i>
+          <h3>24/7 Support</h3>
+          <p>Always here when you need help.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section id="posts">
+    <div class="container">
+      <h2 class="section-title">Latest Posts</h2>
+      <div class="posts-grid">
+        <script>
+          // Display user-submitted blogs
+          const userBlogs = JSON.parse(localStorage.getItem('userBlogs') || '[]');
+          const currentUser = localStorage.getItem('userName');
+          
+          userBlogs.reverse().forEach(blog => {
+            document.write(`
+              <article class="post-card" data-post-id="${blog.id}">
+                ${blog.author === currentUser ? `
+                  <button class="delete-blog" onclick="deleteBlog('${blog.id}')">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                ` : ''}
+                <div class="post-image">
+                  <img src="${blog.image}" alt="${blog.title}">
+                </div>
+                <div class="post-content">
+                  <h3>${blog.title}</h3>
+                  <p>${blog.description}</p>
+                  <small>Posted by: ${blog.author}</small>
+                  <div class="post-meta">
+                    <button class="btn-like" data-post-id="${blog.id}" onclick="handleLike('${blog.id}')">
+                      <i class="fas fa-heart"></i> <span class="like-count" id="like-count-${blog.id}">${blog.likes}</span>
+                    </button>
+                    <button class="btn-comment" data-post-id="${blog.id}" onclick="toggleComments('${blog.id}')">
+                      <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-${blog.id}">${blog.comments.length}</span>
+                    </button>
+                  </div>
+                  <div class="comments-section" id="comments-section-${blog.id}" style="display: none;">
+                    <div class="comments-list" id="comments-list-${blog.id}"></div>
+                    <form class="comment-form" id="comment-form-${blog.id}" onsubmit="handleComment(event, '${blog.id}')">
+                      <input type="text" placeholder="Your Name" required>
+                      <textarea placeholder="Your Comment" required></textarea>
+                      <button type="submit">Post Comment</button>
+                    </form>
+                  </div>
+                  <a href="#" onclick="viewFullBlog('${blog.id}')" class="btn btn-read">Read More</a>
+                </div>
+              </article>
+            `);
+          });
+        </script>
+        <!-- Blog Post 1 -->
+        <article class="post-card" data-post-id="blog1">
+          <div class="post-image">
+            <img src="../blog1new.jpg" alt="Blog 1">
+          </div>
+          <div class="post-content">
+            <h3>Innovative Web Design Trends</h3>
+            <p>Explore the cutting-edge trends that are transforming the web design world today.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog1" onclick="handleLike('blog1')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog1">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog1" onclick="toggleComments('blog1')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog1">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog1" style="display: none;">
+              <div class="comments-list" id="comments-list-blog1"></div>
+              <form class="comment-form" id="comment-form-blog1" onsubmit="handleComment(event, 'blog1')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog1.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 2 -->
+        <article class="post-card" data-post-id="blog2">
+          <div class="post-image">
+            <img src="../blog2new.jpg" alt="Blog 2">
+          </div>
+          <div class="post-content">
+            <h3>Speed Optimization Techniques</h3>
+            <p>Learn practical techniques to speed up your website and improve user experience.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog2" onclick="handleLike('blog2')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog2">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog2" onclick="toggleComments('blog2')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog2">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog2" style="display: none;">
+              <div class="comments-list" id="comments-list-blog2"></div>
+              <form class="comment-form" id="comment-form-blog2" onsubmit="handleComment(event, 'blog2')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog2.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 3 -->
+        <article class="post-card" data-post-id="blog3">
+          <div class="post-image">
+            <img src="../blog3new.jpg" alt="Blog 3">
+          </div>
+          <div class="post-content">
+            <h3>Mastering CSS Animations</h3>
+            <p>Discover how to create smooth animations that captivate your audience.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog3" onclick="handleLike('blog3')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog3">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog3" onclick="toggleComments('blog3')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog3">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog3" style="display: none;">
+              <div class="comments-list" id="comments-list-blog3"></div>
+              <form class="comment-form" id="comment-form-blog3" onsubmit="handleComment(event, 'blog3')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog3.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 4 -->
+        <article class="post-card" data-post-id="blog4">
+          <div class="post-image">
+            <img src="../blog4new.jpg" alt="Blog 4">
+          </div>
+          <div class="post-content">
+            <h3>The Evolution and Impact of Gaming</h3>
+            <p>Gaming has evolved from a simple recreational activity into a multi-billion-dollar industry.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog4" onclick="handleLike('blog4')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog4">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog4" onclick="toggleComments('blog4')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog4">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog4" style="display: none;">
+              <div class="comments-list" id="comments-list-blog4"></div>
+              <form class="comment-form" id="comment-form-blog4" onsubmit="handleComment(event, 'blog4')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog4.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 5 -->
+        <article class="post-card" data-post-id="blog5">
+          <div class="post-image">
+            <img src="../blog5new.jpg" alt="Blog 5">
+          </div>
+          <div class="post-content">
+            <h3>The Joy and Journey of Travel</h3>
+            <p>Travel opens up the mind, expands perspectives, and connects people across cultures.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog5" onclick="handleLike('blog5')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog5">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog5" onclick="toggleComments('blog5')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog5">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog5" style="display: none;">
+              <div class="comments-list" id="comments-list-blog5"></div>
+              <form class="comment-form" id="comment-form-blog5" onsubmit="handleComment(event, 'blog5')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog5.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 6 -->
+        <article class="post-card" data-post-id="blog6">
+          <div class="post-image">
+            <img src="../blog6new.jpg" alt="Blog 6">
+          </div>
+          <div class="post-content">
+            <h3>Why Solo Travel is the Ultimate Journey</h3>
+            <p>Solo travel is more than just exploring new places — it’s a personal transformation. </p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog6" onclick="handleLike('blog6')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog6">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog6" onclick="toggleComments('blog6')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog6">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog6" style="display: none;">
+              <div class="comments-list" id="comments-list-blog6"></div>
+              <form class="comment-form" id="comment-form-blog6" onsubmit="handleComment(event, 'blog6')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog6.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 7 -->
+        <article class="post-card" data-post-id="blog7">
+          <div class="post-image">
+            <img src="../blog7new.jpg" alt="Blog 7">
+          </div>
+          <div class="post-content">
+            <h3>The Art of Street Food: A Culinary Journey</h3>
+            <p>From the smoky alleyways of Bangkok to the bustling stalls of Mexico City, street food is where culture meets flavor.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog7" onclick="handleLike('blog7')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog7">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog7" onclick="toggleComments('blog7')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog7">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog7" style="display: none;">
+              <div class="comments-list" id="comments-list-blog7"></div>
+              <form class="comment-form" id="comment-form-blog7" onsubmit="handleComment(event, 'blog7')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog7.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 8 -->
+        <article class="post-card" data-post-id="blog8">
+          <div class="post-image">
+            <img src="../blog8new.png" alt="Blog 8">
+          </div>
+          <div class="post-content">
+            <h3>Integrating Social Media</h3>
+            <p>Boost engagement by integrating your blog with social media platforms.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog8" onclick="handleLike('blog8')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog8">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog8" onclick="toggleComments('blog8')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog8">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog8" style="display: none;">
+              <div class="comments-list" id="comments-list-blog8"></div>
+              <form class="comment-form" id="comment-form-blog8" onsubmit="handleComment(event, 'blog8')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog8.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+       <!-- Blog Post 9 -->
+        <article class="post-card" data-post-id="blog9">
+          <div class="post-image">
+            <img src="../blog9new.jpg" alt="Blog 9">
+          </div>
+          <div class="post-content">
+            <h3>Content Strategy Essentials</h3>
+            <p>Learn how to develop a winning content strategy that drives traffic.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog9" onclick="handleLike('blog9')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog9">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog9" onclick="toggleComments('blog9')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog9">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog9" style="display: none;">
+              <div class="comments-list" id="comments-list-blog9"></div>
+              <form class="comment-form" id="comment-form-blog9" onsubmit="handleComment(event, 'blog9')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog9.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 10 -->
+        <article class="post-card" data-post-id="blog10">
+          <div class="post-image">
+            <img src="../blog10new.png" alt="Blog 10">
+          </div>
+          <div class="post-content">
+            <h3>Future of Artificial Intelligence</h3>
+            <p>An insightful look into how AI is shaping technology and society.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog10" onclick="handleLike('blog10')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog10">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog10" onclick="toggleComments('blog10')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog10">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog10" style="display: none;">
+              <div class="comments-list" id="comments-list-blog10"></div>
+              <form class="comment-form" id="comment-form-blog10" onsubmit="handleComment(event, 'blog10')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog10.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 11 -->
+        <article class="post-card" data-post-id="blog11">
+          <div class="post-image">
+            <img src="../blog11new.png" alt="Blog 11">
+          </div>
+          <div class="post-content">
+            <h3>Renewable Energy: Powering a Sustainable Future</h3>
+            <p>It's a critical solution to the world's growing energy demands and climate challenges.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog11" onclick="handleLike('blog11')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog11">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog11" onclick="toggleComments('blog11')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog11">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog11" style="display: none;">
+              <div class="comments-list" id="comments-list-blog11"></div>
+              <form class="comment-form" id="comment-form-blog11" onsubmit="handleComment(event, 'blog11')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog11.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+       <!-- Blog Post 12 -->
+        <article class="post-card" data-post-id="blog12">
+          <div class="post-image">
+            <img src="../blog12new.png" alt="Blog 12">
+          </div>
+          <div class="post-content">
+            <h3>Effective Digital Marketing</h3>
+            <p>Strategies to amplify your online presence through digital marketing.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog12" onclick="handleLike('blog12')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog12">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog12" onclick="toggleComments('blog12')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog12">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog12" style="display: none;">
+              <div class="comments-list" id="comments-list-blog12"></div>
+              <form class="comment-form" id="comment-form-blog12" onsubmit="handleComment(event, 'blog12')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog12.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+       <!-- Blog Post 13 -->
+        <article class="post-card" data-post-id="blog13">
+          <div class="post-image">
+            <img src="../blog13new.png" alt="Blog 13">
+          </div>
+          <div class="post-content">
+            <h3>Building a Personal Brand</h3>
+            <p>Tips on how to build and maintain a compelling personal brand online.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog13" onclick="handleLike('blog13')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog13">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog13" onclick="toggleComments('blog13')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog13">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog13" style="display: none;">
+              <div class="comments-list" id="comments-list-blog13"></div>
+              <form class="comment-form" id="comment-form-blog13" onsubmit="handleComment(event, 'blog13')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog13.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 14 -->
+        <article class="post-card" data-post-id="blog14">
+          <div class="post-image">
+            <img src="../blog14new.png" alt="Blog 14">
+          </div>
+          <div class="post-content">
+            <h3>News in the Digital Age</h3>
+            <p>In the digital age, news spreads faster than ever before.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog14" onclick="handleLike('blog14')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog14">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog14" onclick="toggleComments('blog14')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog14">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog14" style="display: none;">
+              <div class="comments-list" id="comments-list-blog14"></div>
+              <form class="comment-form" id="comment-form-blog14" onsubmit="handleComment(event, 'blog14')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog14.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+        <!-- Blog Post 15 -->
+        <article class="post-card" data-post-id="blog15">
+          <div class="post-image">
+            <img src="../blog15new.jpg" alt="Blog 15">
+          </div>
+          <div class="post-content">
+            <h3>Trends in Mobile App Development</h3>
+            <p>Stay updated with the latest trends and tools in mobile application development.</p>
+            <div class="post-meta">
+              <button class="btn-like" data-post-id="blog15" onclick="handleLike('blog15')">
+                <i class="fas fa-heart"></i> <span class="like-count" id="like-count-blog15">0</span>
+              </button>
+              <button class="btn-comment" data-post-id="blog15" onclick="toggleComments('blog15')">
+                <i class="fas fa-comment"></i> <span class="comment-count" id="comment-count-blog15">0</span>
+              </button>
+            </div>
+            <div class="comments-section" id="comments-section-blog15" style="display: none;">
+              <div class="comments-list" id="comments-list-blog15"></div>
+              <form class="comment-form" id="comment-form-blog15" onsubmit="handleComment(event, 'blog15')">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Your Comment" required></textarea>
+                <button type="submit">Post Comment</button>
+              </form>
+            </div>
+            <a href="../blog15.html" class="btn btn-read">Read More</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+ 
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title">Testimonials</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <p>"Blog & Beyond completely transformed the way I share my ideas. The design is stunning and the user experience is unmatched!"</p>
+          <h4>- Narendra Modi</h4>
+        </div>
+        <div class="testimonial">
+          <p>"The intuitive interface and modern features make blogging a breeze. Highly recommended for any serious content creator."</p>
+          <h4>- Rashmika Mandana</h4>
+        </div>
+        <div class="testimonial">
+          <p>"I love the responsive design and cool animations. It's a perfect platform for bloggers looking for a professional edge."</p>
+          <h4>- Virat Kohli</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About Us</h2>
+      <div class="about-content">
+        <img src="../AboutNew.jpg" alt="About Us">
+        <div class="about-text">
+          <p>At Blog & Beyond, we're dedicated to creating a platform that empowers bloggers with modern design, robust features, and a seamless user experience. Our mission is to connect ideas with a global audience and help every voice be heard.</p>
+          <p>Join us on this journey and experience a blogging platform that's as dynamic as you are.</p>
+          <a href="#contact" class="btn">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Get in Touch</h2>
+      <form action="#" class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <textarea name="message" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+ 
+  <section id="subscribe">
+    <div class="container">
+      <h2 class="section-title">Subscribe to Our Newsletter</h2>
+      <p>Get the latest posts, news, and exclusive offers delivered straight to your inbox.</p>
+      <form action="#" class="subscribe-form" id="subscribeForm" onsubmit="handleSubscribe(event)">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <button type="submit" class="btn">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <a href="#">Blog & Beyond</a>
+      </div>
+      <div class="footer-links">
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#posts">Posts</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/share/16kmKKurmA/" class="facebook" data-platform="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="twitter" data-platform="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/harshit_yadav._31?igsh=MW04d2s0MW1yNjJ2OQ==" class="instagram" data-platform="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="linkedin" data-platform="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      
+      <div class="footer-copy">
+        <p>&copy; 2025 Blog & Beyond. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="add-blog-button" onclick="checkLoginAndRedirect()">
+    <i class="fas fa-plus"></i>
+  </button>
+  
+  <a href="#hero" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <script src="trial.js"></script>
+  <script src="api.js"></script>
+
+  <script>
+    
+    window.addEventListener('load', function() {
+      document.getElementById('preloader').style.display = 'none';
+    });
+
+    
+    const backToTop = document.querySelector('.back-to-top');
+    backToTop.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+
+<script>
+    document.getElementById('loginBtn').addEventListener('click', function() {
+        window.location.href = 'login.html';
+    });
+</script>
+
+  <script>
+    // Function to sync likes and comments from local storage
+    function syncLikesAndComments() {
+      // Loop through all blog posts (1-15)
+      for (let i = 1; i <= 15; i++) {
+        const blogId = `blog${i}`;
+        
+        // Sync likes
+        const likes = localStorage.getItem(`${blogId}_likes`) || '0';
+        const likeCount = document.getElementById(`like-count-${blogId}`);
+        if (likeCount) {
+          likeCount.textContent = likes;
+        }
+        
+        // Sync comments
+        const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+        const commentCount = document.getElementById(`comment-count-${blogId}`);
+        if (commentCount) {
+          commentCount.textContent = comments.length;
+        }
+        
+        // Update comments list if section is visible
+        const commentsList = document.getElementById(`comments-list-${blogId}`);
+        if (commentsList && commentsList.closest('.comments-section').style.display !== 'none') {
+          displayComments(blogId);
+        }
+      }
+    }
+
+    // Function to handle likes
+    function handleLike(blogId) {
+      // Check if user is logged in
+      // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      // if (!isLoggedIn) {
+      //   alert('Please login to like posts');
+      //   return;
+      // }
+
+      const userName = localStorage.getItem('userName');
+      const likedPosts = JSON.parse(localStorage.getItem(`${userName}_liked_posts`) || '[]');
+      
+      // Check if user already liked this post
+      if (likedPosts.includes(blogId)) {
+        alert('You have already liked this post');
+        return;
+      }
+
+      const likeCount = document.getElementById(`like-count-${blogId}`);
+      const currentLikes = parseInt(localStorage.getItem(`${blogId}_likes`) || '0');
+      const newLikes = currentLikes + 1;
+      
+      // Save like count and update user's liked posts
+      localStorage.setItem(`${blogId}_likes`, newLikes.toString());
+      likedPosts.push(blogId);
+      localStorage.setItem(`${userName}_liked_posts`, JSON.stringify(likedPosts));
+      
+      if (likeCount) {
+        likeCount.textContent = newLikes;
+      }
+      
+      // Add animation and permanent liked state
+      const likeButton = document.querySelector(`[data-post-id="${blogId}"] .btn-like`);
+      if (likeButton) {
+        likeButton.classList.add('liked');
+        likeButton.classList.add('already-liked');
+      }
+    }
+
+    // Add function to sync liked states on page load
+    function syncLikedStates() {
+      if (localStorage.getItem('isLoggedIn') === 'true') {
+        const userName = localStorage.getItem('userName');
+        const likedPosts = JSON.parse(localStorage.getItem(`${userName}_liked_posts`) || '[]');
+        
+        likedPosts.forEach(blogId => {
+          const likeButton = document.querySelector(`[data-post-id="${blogId}"] .btn-like`);
+          if (likeButton) {
+            likeButton.classList.add('already-liked');
+          }
+        });
+      }
+    }
+
+    // Add to DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+      syncLikesAndComments();
+      syncLikedStates();
+    });
+  </script>
+
+  <script>
+    function buildLPS(pattern) {
+  const lps = Array(pattern.length).fill(0);
+  let length = 0;
+  let i = 1;
+
+  while (i < pattern.length) {
+    if (pattern[i] === pattern[length]) {
+      length++;
+      lps[i] = length;
+      i++;
+    } else {
+      if (length !== 0) {
+        length = lps[length - 1];
+      } else {
+        lps[i] = 0;
+        i++;
+      }
+    }
+  }
+
+  return lps;
+}
+
+// KMP search function
+function KMP(text, pattern) {
+  if (pattern === "") return true;
+
+  const lps = buildLPS(pattern);
+  let i = 0, j = 0;
+
+  while (i < text.length) {
+    if (pattern[j] === text[i]) {
+      i++;
+      j++;
+    }
+
+    if (j === pattern.length) {
+      return true; // pattern found
+    } else if (i < text.length && pattern[j] !== text[i]) {
+      if (j !== 0) {
+        j = lps[j - 1];
+      } else {
+        i++;
+      }
+    }
+  }
+
+  return false;
+}
+
+function searchPosts() {
+  const searchInput = document.querySelector('.header-search input').value.toLowerCase();
+  const posts = document.querySelectorAll('.post-card');
+
+  posts.forEach(post => {
+    const title = post.querySelector('h3').textContent.toLowerCase();
+    const description = post.querySelector('p').textContent.toLowerCase();
+
+    if (KMP(title, searchInput) || KMP(description, searchInput)) {
+      post.style.display = 'block';
+    } else {
+      post.style.display = 'none';
+    }
+  });
+}
+
+document.querySelector('.header-search button').addEventListener('click', searchPosts);
+
+document.querySelector('.header-search input').addEventListener('keyup', function(event) {
+  if (event.key === 'Enter') {
+    searchPosts();
+  }
+});
+  </script>
+
+  <script>
+    function toggleComments(blogId) {
+      const commentsSection = document.getElementById(`comments-section-${blogId}`);
+      if (commentsSection) {
+        const isHidden = commentsSection.style.display === 'none';
+        commentsSection.style.display = isHidden ? 'block' : 'none';
+        
+        // Load comments when section is shown
+        if (isHidden) {
+          const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+          const commentsList = document.getElementById(`comments-list-${blogId}`);
+          if (commentsList) {
+            commentsList.innerHTML = comments.map((comment, index) => `
+              <div class="comment">
+                <strong>${comment.name}</strong>
+                <p>${comment.text}</p>
+                <button class="delete-comment" onclick="deleteComment('${blogId}', ${index})">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            `).join('');
+          }
+        }
+      }
+    }
+
+    function deleteComment(blogId, index) {
+      const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+      comments.splice(index, 1);
+      localStorage.setItem(`${blogId}_comments`, JSON.stringify(comments));
+      
+      // Update comment count
+      const commentCount = document.getElementById(`comment-count-${blogId}`);
+      if (commentCount) {
+        commentCount.textContent = comments.length;
+      }
+      
+      // Refresh comments display
+      toggleComments(blogId);
+      toggleComments(blogId);
+    }
+
+    function handleComment(event, blogId) {
+      event.preventDefault();
+      
+      const form = event.target;
+      const name = form.querySelector('input').value;
+      const text = form.querySelector('textarea').value;
+      
+      const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+      comments.push({ name, text });
+      localStorage.setItem(`${blogId}_comments`, JSON.stringify(comments));
+      
+      // Update comment count
+      const commentCount = document.getElementById(`comment-count-${blogId}`);
+      if (commentCount) {
+        commentCount.textContent = comments.length;
+      }
+      
+      // Clear form and refresh comments display
+      form.reset();
+      toggleComments(blogId);
+      toggleComments(blogId);
+    }
+  </script>
+
+  <script>
+    function handleLogout() {
+      localStorage.setItem('isLoggedIn', 'false');
+      localStorage.removeItem('userName');
+      window.location.href = '../newLogin.html';
+    }
+  </script>
+
+  <script>
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      
+      const form = event.target;
+      const contactData = {
+        name: form.name.value,
+        email: form.email.value,
+        message: form.message.value,
+        timestamp: new Date().toISOString()
+      };
+
+      // Get existing messages or initialize empty array
+      const existingMessages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+      
+      // Add new message
+      existingMessages.push(contactData);
+      
+      // Save back to localStorage
+      localStorage.setItem('contactMessages', JSON.stringify(existingMessages));
+      
+      // Clear form
+      form.reset();
+      
+      // Show success message
+      alert('Thank you for your message! We will get back to you soon.');
+    }
+  </script>
+
+  <script>
+    function handleSubscribe(event) {
+      event.preventDefault();
+      
+      const form = event.target;
+      const email = form.email.value;
+      
+      // Get existing subscribers or initialize empty array
+      const subscribers = JSON.parse(localStorage.getItem('newsletter_subscribers') || '[]');
+      
+      // Check if email already exists
+      if (subscribers.includes(email)) {
+        alert('This email is already subscribed to our newsletter!');
+        return;
+      }
+      
+      // Add new subscriber
+      subscribers.push(email);
+      
+      // Save back to localStorage
+      localStorage.setItem('newsletter_subscribers', JSON.stringify(subscribers));
+      
+      // Clear form
+      form.reset();
+      
+      // Show success message
+      alert('Thank you for subscribing to our newsletter!');
+    }
+  </script>
+
+  <script>
+    function checkLoginAndRedirect() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      if (!isLoggedIn) {
+        alert('Please login to add a blog post');
+        window.location.href = '../newLogin.html';
+      } else {
+        window.location.href = 'addBlog.html';
+      }
+    }
+  </script>
+
+  <script>
+    function viewFullBlog(blogId) {
+      const userBlogs = JSON.parse(localStorage.getItem('userBlogs') || '[]');
+      const blog = userBlogs.find(b => b.id === blogId);
+      
+      if (blog) {
+        // Store the current blog in localStorage for viewing
+        localStorage.setItem('currentBlog', JSON.stringify(blog));
+        // Create and open the blog view page
+        const blogWindow = window.open('', '_blank');
+        blogWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>${blog.title}</title>
+            <link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Lato:300,400" rel="stylesheet">
+            <link rel="stylesheet" href="trial.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+            <style>
+              body {
+                font-family: 'Roboto', sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+                max-width: 800px;
+                margin: 0 auto;
+              }
+              .blog-header {
+                text-align: center;
+                margin-bottom: 30px;
+                position: relative;
+              }
+              .blog-image {
+                width: 100%;
+                max-height: 400px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-bottom: 20px;
+              }
+              .blog-meta {
+                color: #666;
+                font-size: 0.9em;
+                margin-bottom: 20px;
+              }
+              .blog-content {
+                white-space: pre-wrap;
+              }
+              .back-button {
+                display: inline-block;
+                padding: 10px 20px;
+                background: #1e3c72;
+                color: white;
+                text-decoration: none;
+                border-radius: 4px;
+                margin-bottom: 20px;
+              }
+              .delete-button {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 10px 20px;
+                background: #ff4444;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.3s ease;
+              }
+              .delete-button:hover {
+                background: #cc0000;
+              }
+            </style>
+          </head>
+          <body>
+            <a href="trail.html" class="back-button">← Back to Home</a>
+            <div class="blog-header">
+              <h1>${blog.title}</h1>
+              ${blog.author === currentUser ? `
+                <button class="delete-button" onclick="deleteBlog('${blog.id}')">
+                  <i class="fas fa-trash"></i> Delete Blog
+                </button>
+              ` : ''}
+              <div class="blog-meta">
+                Posted by ${blog.author} on ${new Date(blog.timestamp).toLocaleDateString()}
+              </div>
+              <img src="${blog.image}" alt="${blog.title}" class="blog-image">
+            </div>
+            <div class="blog-content">
+              ${blog.content}
+            </div>
+
+            <script>
+              function deleteBlog(blogId) {
+                if (confirm('Are you sure you want to delete this blog post? This action cannot be undone.')) {
+                  // Get existing blogs
+                  const blogs = JSON.parse(localStorage.getItem('userBlogs') || '[]');
+                  
+                  // Find the blog index
+                  const blogIndex = blogs.findIndex(blog => blog.id === blogId);
+                  
+                  if (blogIndex !== -1) {
+                    // Remove the blog
+                    blogs.splice(blogIndex, 1);
+                    
+                    // Save back to localStorage
+                    localStorage.setItem('userBlogs', JSON.stringify(blogs));
+                    
+                    // Close this window and refresh the parent window
+                    window.opener.location.reload();
+                    window.close();
+                  }
+                }
+              }
+            </script>
+          </body>
+          </html>
+        `);
+      }
+    }
+  </script>
+
+  <script>
+    function deleteBlog(blogId) {
+      if (confirm('Are you sure you want to delete this blog post? This action cannot be undone.')) {
+        // Get existing blogs
+        const blogs = JSON.parse(localStorage.getItem('userBlogs') || '[]');
+        
+        // Find the blog index
+        const blogIndex = blogs.findIndex(blog => blog.id === blogId);
+        
+        if (blogIndex !== -1) {
+          // Remove the blog
+          blogs.splice(blogIndex, 1);
+          
+          // Save back to localStorage
+          localStorage.setItem('userBlogs', JSON.stringify(blogs));
+          
+          // Refresh the page to show updated content
+          window.location.reload();
+        }
+      }
+    }
+  </script>
+</body>
+</html>

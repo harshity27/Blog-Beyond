@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trends in Mobile App Development</title>
+    <link rel="stylesheet" href="blog1.css">
+    <style>
+        /* Like button styles */
+        .like-button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(30, 60, 114, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .like-button:hover {
+            background: linear-gradient(45deg, #2a5298, #1e3c72);
+            box-shadow: 0 6px 12px rgba(30, 60, 114, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .like-button.liked {
+            animation: pulse 0.5s ease;
+        }
+        
+        /* Like counter styles */
+        .like-counter {
+            background: rgba(15, 15, 35, 0.7);
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .like-counter:hover {
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .like-count-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #00f7ff;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+            line-height: 1;
+        }
+        
+        .like-count-label {
+            font-size: 1rem;
+            color: #e0e0ff;
+            margin-top: 5px;
+        }
+        
+        .submit-button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(30, 60, 114, 0.2);
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(45deg, #2a5298, #1e3c72);
+            box-shadow: 0 6px 12px rgba(30, 60, 114, 0.3);
+            transform: translateY(-3px);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .back-button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(30, 60, 114, 0.2);
+        }
+
+        .back-button:hover {
+            background: linear-gradient(45deg, #2a5298, #1e3c72);
+            box-shadow: 0 6px 12px rgba(30, 60, 114, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(30, 60, 114, 0.2);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: linear-gradient(45deg, #2a5298, #1e3c72);
+            box-shadow: 0 6px 12px rgba(30, 60, 114, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .delete-button {
+            background: linear-gradient(45deg, #d11b1b, #ff4444);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(209, 27, 27, 0.2);
+            margin-left: 20px;
+        }
+
+        .delete-button:hover {
+            background: linear-gradient(45deg, #ff4444, #d11b1b);
+            box-shadow: 0 6px 12px rgba(209, 27, 27, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .confirmation-dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .confirmation-dialog.show {
+            display: block;
+        }
+
+        .dialog-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Trends in Mobile App Development</h1>
+        <nav>
+            <a href="Website\trail.html">Home</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="blog-full">
+        <!-- <img src="images/mobile_app_trends.jpg" alt="Trends in Mobile App Development" class="blog-image"> -->
+        <p class="blog-meta">Published on March 26, 2025 | By Blog & Beyond</p>
+
+        <h2>Introduction</h2>
+        <p>Mobile app development is constantly evolving with new technologies and user demands. This article highlights the latest trends that are shaping the future of mobile applications.</p>
+
+        <h2>1. Cross-Platform Development</h2>
+        <p>Cross-platform frameworks like Flutter and React Native allow developers to build applications for both iOS and Android from a single codebase. This approach reduces development time and cost.</p>
+
+        <h2>2. 5G Technology Integration</h2>
+        <p>With the rise of 5G networks, mobile apps can now deliver faster speeds, lower latency, and improved user experiences. This technology enables innovations like real-time streaming and enhanced AR/VR applications.</p>
+
+        <h2>3. Artificial Intelligence and Machine Learning</h2>
+        <p>AI and ML are transforming mobile apps by offering personalized experiences, voice assistants, and predictive analytics. These technologies enhance user engagement and app functionality.</p>
+
+        <h2>4. Progressive Web Apps (PWAs)</h2>
+        <p>PWAs combine the best of web and mobile applications. They offer faster load times, offline capabilities, and better performance without requiring installation from app stores.</p>
+
+        <h2>5. Enhanced Security Measures</h2>
+        <p>As cyber threats increase, mobile app security is a top priority. Trends include advanced encryption, biometric authentication, and privacy regulations compliance to protect user data.</p>
+
+        <h2>6. Internet of Things (IoT) Integration</h2>
+        <p>IoT-enabled apps can connect and control smart devices, offering new levels of automation and convenience. This trend is growing in sectors like healthcare, smart homes, and industrial automation.</p>
+
+        <h2>7. Augmented Reality (AR) and Virtual Reality (VR)</h2>
+        <p>AR and VR technologies are becoming more accessible, enhancing applications in gaming, education, and e-commerce by providing immersive experiences.</p>
+
+        <h2>Conclusion</h2>
+        <p>Staying updated with mobile app development trends is crucial for building innovative and user-friendly applications. By adopting new technologies and practices, you can create apps that meet the demands of modern users.</p>
+
+        <div class="blog-interactions">
+            <div class="like-section">
+                <div class="like-counter">
+                    <span class="like-count-number" id="likeCountDisplay">0</span>
+                    <span class="like-count-label">Likes</span>
+                </div>
+                <button id="likeButton" class="like-button">
+                    <span class="like-icon">❤️</span>
+                    <span id="likeCount">0</span> Likes
+                </button>
+                <button id="deleteButton" class="delete-button">Delete Blog</button>
+            </div>
+            
+            <div class="comment-section">
+                <h3>Comments</h3>
+                <div id="commentsList" class="comments-list">
+                    <!-- Comments will be displayed here -->
+                </div>
+                <form id="commentForm" class="comment-form">
+                    <div class="form-group">
+                        <input type="text" id="commenterName" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="commentText" placeholder="Your Comment" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Post Comment</button>
+                </form>
+            </div>
+        </div>
+
+        <a href="Website\trail.html" class="back-button">Back to Home</a>
+    </section>
+
+    <div id="overlay" class="overlay"></div>
+    <div id="confirmationDialog" class="confirmation-dialog">
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete this blog post? This action cannot be undone.</p>
+        <div class="dialog-buttons">
+            <button class="submit-button" onclick="confirmDelete()">Yes, Delete</button>
+            <button class="delete-button" onclick="cancelDelete()">Cancel</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Blog & Beyond. All rights reserved.</p>
+    </footer>
+
+    <a href="#" class="back-to-top">↑</a>
+
+    <script>
+        // Blog post ID - unique identifier for this blog post
+        const blogId = 'blog15';
+        
+        // Initialize likes and comments from local storage
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load likes
+            const likes = localStorage.getItem(`${blogId}_likes`) || '0';
+            document.getElementById('likeCount').textContent = likes;
+            document.getElementById('likeCountDisplay').textContent = likes;
+            
+            // Load comments
+            const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+            displayComments(comments);
+            
+            // Set up event listeners
+            const likeButton = document.getElementById('likeButton');
+            if (likeButton) {
+                likeButton.addEventListener('click', handleLike);
+            }
+            
+            const commentForm = document.getElementById('commentForm');
+            if (commentForm) {
+                commentForm.addEventListener('submit', handleComment);
+            }
+        });
+        
+        // Handle like button click
+        function handleLike() {
+            const likeCountElement = document.getElementById('likeCount');
+            const likeCountDisplayElement = document.getElementById('likeCountDisplay');
+            const currentLikes = parseInt(localStorage.getItem(`${blogId}_likes`) || '0');
+            const newLikes = currentLikes + 1;
+            
+            // Update display
+            likeCountElement.textContent = newLikes;
+            likeCountDisplayElement.textContent = newLikes;
+            
+            // Save to local storage
+            localStorage.setItem(`${blogId}_likes`, newLikes.toString());
+            
+            // Visual feedback
+            const likeButton = document.getElementById('likeButton');
+            likeButton.classList.add('liked');
+            setTimeout(() => {
+                likeButton.classList.remove('liked');
+            }, 1000);
+        }
+        
+        // Handle comment submission
+        function handleComment(event) {
+            event.preventDefault();
+            
+            const nameInput = document.getElementById('commenterName');
+            const commentInput = document.getElementById('commentText');
+            const name = nameInput.value.trim();
+            const comment = commentInput.value.trim();
+            
+            if (name && comment) {
+                const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+                comments.push({
+                    name,
+                    comment,
+                    date: new Date().toISOString()
+                });
+                
+                // Save to local storage
+                localStorage.setItem(`${blogId}_comments`, JSON.stringify(comments));
+                
+                // Clear form
+                nameInput.value = '';
+                commentInput.value = '';
+                
+                // Update display
+                displayComments(comments);
+            }
+        }
+        
+        // Display comments
+        function displayComments(comments) {
+            const commentsList = document.getElementById('commentsList');
+            commentsList.innerHTML = comments.map(comment => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <strong>${comment.name}</strong>
+                        <span class="comment-date">${new Date(comment.date).toLocaleDateString()}</span>
+                    </div>
+                    <div class="comment-body">${comment.comment}</div>
+                </div>
+            `).join('');
+        }
+
+        // Back to top button functionality
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Delete blog functionality
+        document.getElementById('deleteButton').addEventListener('click', showDeleteConfirmation);
+
+        function showDeleteConfirmation() {
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('confirmationDialog').classList.add('show');
+        }
+
+        function cancelDelete() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('confirmationDialog').classList.remove('show');
+        }
+
+        function confirmDelete() {
+            // Clear all blog data from localStorage
+            localStorage.removeItem(`${blogId}_likes`);
+            localStorage.removeItem(`${blogId}_comments`);
+            
+            // Redirect to home page
+            window.location.href = 'Website/trail.html';
+        }
+    </script>
+</body>
+</html>

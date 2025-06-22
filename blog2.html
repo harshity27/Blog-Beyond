@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Optimization Techniques</title>
+    <link rel="stylesheet" href="blog1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5f5f5;
+            --text-color: #333;
+            --border-color: #eaeaea;
+            --hover-color: #357abd;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --input-bg: #f8f9fa;
+        }
+
+        .blog-interactions {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px var(--shadow-color);
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-like, .btn-comment {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            background: white;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-like:hover, .btn-comment:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        }
+
+        .btn-like i, .btn-comment i {
+            font-size: 1.1rem;
+        }
+
+        .like-count, .comment-count {
+            font-weight: 600;
+        }
+
+        .liked {
+            animation: likeAnimation 0.5s ease;
+        }
+
+        @keyframes likeAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .comments-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--secondary-color);
+            border-radius: 12px;
+        }
+
+        .comments-list {
+            margin-bottom: 1.5rem;
+        }
+
+        .comment {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 12px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .comment:hover {
+            transform: translateY(-2px);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .comment-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .comment-text {
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px var(--shadow-color);
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--input-bg);
+            transition: all 0.3s ease;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+        }
+
+        .comment-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .comment-form button {
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .comment-form button:hover {
+            background: var(--hover-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Speed Optimization Techniques</h1>
+        <nav>
+            <a href="Website\trail.html">Home</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="blog-full">
+        <!-- <img src="images/speed_optimization.jpg" alt="Speed Optimization" class="blog-image"> -->
+        <p class="blog-meta">Published on March 26, 2025 | By Blog & Beyond</p>
+
+        <h2>Introduction</h2>
+        <p>In today's fast-paced digital world, website speed is crucial for user satisfaction and SEO ranking. Slow-loading websites can lead to higher bounce rates and lost visitors. Let's explore effective techniques to optimize your website speed.</p>
+
+        <h2>1. Optimize Images</h2>
+        <p>Large image files are a common cause of slow load times. Use modern formats like WebP, compress images using tools like TinyPNG, and implement lazy loading to defer image loading until they are needed.</p>
+
+        <h2>2. Minimize HTTP Requests</h2>
+        <p>Reduce the number of HTTP requests by combining CSS and JavaScript files, using CSS sprites for icons, and removing unnecessary scripts to streamline loading.</p>
+
+        <h2>3. Enable Browser Caching</h2>
+        <p>Set up browser caching to store static files (images, CSS, JavaScript) locally on users' devices, reducing load times for repeat visitors. Configure cache headers to control how long files are cached.</p>
+
+        <h2>4. Use a Content Delivery Network (CDN)</h2>
+        <p>A CDN distributes your website content across multiple servers worldwide, ensuring faster delivery by serving content from the closest location to the user.</p>
+
+        <h2>5. Minify CSS, JavaScript, and HTML</h2>
+        <p>Minifying files removes unnecessary whitespace, comments, and characters. Tools like UglifyJS (JavaScript) and CSSNano (CSS) can help reduce file size and boost performance.</p>
+
+        <h2>6. Optimize Web Fonts</h2>
+        <p>Limit the number of web fonts and use modern formats like WOFF2. Ensure fonts are preloaded and only load the necessary character sets.</p>
+
+        <div class="blog-interactions">
+            <div class="post-meta">
+                <button class="btn-like" id="likeButton">
+                    <i class="fas fa-heart"></i>
+                    <span class="like-count" id="likeCount">0</span>
+                </button>
+                <button class="btn-comment" onclick="toggleComments('blog2')">
+                    <i class="fas fa-comment"></i>
+                    <span class="comment-count" id="comment-count-blog2">0</span>
+                </button>
+            </div>
+            
+            <div class="comments-section" id="comments-section-blog2" style="display: none;">
+                <div class="comments-list" id="comments-list-blog2">
+                    <!-- Comments will be displayed here -->
+                </div>
+                <form class="comment-form" id="comment-form-blog2" onsubmit="handleComment(event, 'blog2')">
+                    <input type="text" placeholder="Your Name" required>
+                    <textarea placeholder="Your Comment" required></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+            </div>
+        </div>
+
+        <h2>Conclusion</h2>
+        <p>Implementing these speed optimization techniques will enhance user experience, improve search engine rankings, and reduce server load. Regularly monitor your site's performance using tools like Google PageSpeed Insights and GTmetrix.</p>
+
+        <a href="Website\trail.html" class="back-button">Back to Home</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Blog & Beyond. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const blogId = 'blog2';
+            
+            // Load likes
+            const likes = localStorage.getItem(`${blogId}_likes`) || '0';
+            document.getElementById('likeCount').textContent = likes;
+            
+            // Load comments
+            const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+            document.getElementById('comment-count-blog2').textContent = comments.length;
+            displayComments(comments, blogId);
+            
+            // Set up event listeners
+            const likeButton = document.getElementById('likeButton');
+            if (likeButton) {
+                likeButton.addEventListener('click', () => handleLike(blogId));
+            }
+        });
+        
+        // Handle like button click
+        function handleLike(blogId) {
+            const likeCountElement = document.getElementById('likeCount');
+            const currentLikes = parseInt(localStorage.getItem(`${blogId}_likes`) || '0');
+            const newLikes = currentLikes + 1;
+            
+            // Update display
+            likeCountElement.textContent = newLikes;
+            
+            // Save to local storage
+            localStorage.setItem(`${blogId}_likes`, newLikes.toString());
+            
+            // Add animation class
+            likeCountElement.classList.add('liked');
+            setTimeout(() => likeCountElement.classList.remove('liked'), 1000);
+        }
+        
+        // Toggle comments section
+        function toggleComments(blogId) {
+            const commentsSection = document.getElementById(`comments-section-${blogId}`);
+            const isHidden = commentsSection.style.display === 'none';
+            commentsSection.style.display = isHidden ? 'block' : 'none';
+        }
+        
+        // Handle comment submission
+        function handleComment(event, blogId) {
+            event.preventDefault();
+            
+            const nameInput = document.querySelector(`#comment-form-${blogId} input[placeholder="Your Name"]`);
+            const commentInput = document.querySelector(`#comment-form-${blogId} textarea[placeholder="Your Comment"]`);
+            const name = nameInput.value.trim();
+            const comment = commentInput.value.trim();
+            
+            if (name && comment) {
+                // Get existing comments
+                const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+                
+                // Add new comment
+                comments.push({
+                    name: name,
+                    text: comment,
+                    date: new Date().toLocaleDateString()
+                });
+                
+                // Save to local storage
+                localStorage.setItem(`${blogId}_comments`, JSON.stringify(comments));
+                
+                // Update comment count
+                document.getElementById(`comment-count-${blogId}`).textContent = comments.length;
+                
+                // Clear form
+                nameInput.value = '';
+                commentInput.value = '';
+                
+                // Update display
+                displayComments(comments, blogId);
+            }
+        }
+        
+        // Display comments
+        function displayComments(comments, blogId) {
+            const commentsList = document.getElementById(`comments-list-${blogId}`);
+            commentsList.innerHTML = comments.map(comment => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.name}</span>
+                        <span class="comment-date">${comment.date}</span>
+                    </div>
+                    <div class="comment-text">${comment.text}</div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

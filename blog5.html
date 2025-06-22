@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Joy and Journey of Travel</title>
+    <link rel="stylesheet" href="blog1.css">
+    <style>
+        .like-button {
+            background: linear-gradient(135deg, #e366db, #e4607b);
+            color: #e0e0ff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .like-button:hover {
+            background: linear-gradient(135deg, #d9913a, #abc229);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .like-button.liked {
+            animation: pulse 0.5s ease;
+        }
+
+        .like-counter {
+            background: rgba(15, 15, 35, 0.7);
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .like-counter:hover {
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .like-count-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #00f7ff;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+            line-height: 1;
+        }
+
+        .like-count-label {
+            font-size: 1rem;
+            color: #e0e0ff;
+            margin-top: 5px;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .comment-form textarea {
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: #00b8ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-button:hover {
+            background: #00ff9d;
+        }
+
+        .comment {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f1f1f1;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .comment-body {
+            color: #333;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>The Joy and Journey of Travel</h1>
+        <nav>
+            <a href="Website/trail.html">Home</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="blog-full">
+        <!-- <img src="images/travel_blog.jpg" alt="Travel Adventure" class="blog-image"> -->
+        <p class="blog-meta">Published on June 21, 2025 | By Blog &beyond</p>
+
+        <h2>Introduction</h2>
+        <p>Travel opens up the mind, expands perspectives, and connects people across cultures. In this post, we explore the significance, benefits, and beauty of travel — beyond just destinations.</p>
+
+        <h2>1. Why People Travel</h2>
+        <p>Whether it's for adventure, relaxation, learning, or personal growth, travel fulfills a deep human desire to explore and experience the unknown.</p>
+
+        <h2>2. The Impact of Travel</h2>
+        <p>Travel stimulates local economies, fosters global understanding, and often leads to a greater appreciation of one’s own home and culture.</p>
+
+        <h2>3. Popular Destinations</h2>
+        <p>From the romantic streets of Paris to the wild landscapes of Patagonia, every corner of the world offers unique wonders. Some travel for history, others for nature or cuisine.</p>
+
+        <h2>4. Sustainable Travel</h2>
+        <p>With tourism’s rise comes the need for responsibility. Choosing eco-friendly transportation, respecting local customs, and minimizing waste are essential to sustainable travel.</p>
+
+        <h2>5. Digital Nomadism</h2>
+        <p>Remote work has created a new generation of digital nomads who explore the world while staying connected to jobs and projects online.</p>
+
+        <h2>6. Travel Tips</h2>
+        <p>Always pack light, stay flexible, and engage with locals. Use technology to plan but leave room for spontaneity — some of the best memories are unplanned.</p>
+
+        <h2>Conclusion</h2>
+        <p>Travel is more than a break from routine — it’s a gateway to personal transformation, cultural empathy, and unforgettable memories. The world is waiting — go explore it.</p>
+
+        <div class="blog-interactions">
+            <div class="like-section">
+                <div class="like-counter">
+                    <span class="like-count-number" id="likeCountDisplay">0</span>
+                    <span class="like-count-label">Likes</span>
+                </div>
+                <button id="likeButton" class="like-button">
+                    <span class="like-icon">✈</span>
+                    <span id="likeCount">0</span> Likes
+                </button>
+            </div>
+
+            <div class="comment-section">
+                <h3>Comments</h3>
+                <div id="commentsList" class="comments-list"></div>
+                <form id="commentForm" class="comment-form">
+                    <input type="text" id="commenterName" placeholder="Your Name" required>
+                    <textarea id="commentText" placeholder="Your Comment" required></textarea>
+                    <button type="submit" class="submit-button">Post Comment</button>
+                </form>
+            </div>
+        </div>
+
+        <a href="Website/trail.html" class="back-button">Back to Home</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Blog &beyond. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const blogId = 'blog7';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const likes = localStorage.getItem(`${blogId}_likes`) || '0';
+            document.getElementById('likeCount').textContent = likes;
+            document.getElementById('likeCountDisplay').textContent = likes;
+
+            const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+            displayComments(comments);
+
+            document.getElementById('likeButton').addEventListener('click', handleLike);
+            document.getElementById('commentForm').addEventListener('submit', handleComment);
+        });
+
+        function handleLike() {
+            const likeCountEl = document.getElementById('likeCount');
+            const likeDisplayEl = document.getElementById('likeCountDisplay');
+            let currentLikes = parseInt(localStorage.getItem(`${blogId}_likes`) || '0');
+            currentLikes++;
+
+            likeCountEl.textContent = currentLikes;
+            likeDisplayEl.textContent = currentLikes;
+            localStorage.setItem(`${blogId}_likes`, currentLikes.toString());
+
+            const likeButton = document.getElementById('likeButton');
+            likeButton.classList.add('liked');
+            setTimeout(() => likeButton.classList.remove('liked'), 1000);
+        }
+
+        function handleComment(event) {
+            event.preventDefault();
+            const name = document.getElementById('commenterName').value.trim();
+            const comment = document.getElementById('commentText').value.trim();
+            if (!name || !comment) return;
+
+            const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+            comments.push({ name, comment, date: new Date().toISOString() });
+            localStorage.setItem(`${blogId}_comments`, JSON.stringify(comments));
+
+            document.getElementById('commenterName').value = '';
+            document.getElementById('commentText').value = '';
+            displayComments(comments);
+        }
+
+        function displayComments(comments) {
+            const container = document.getElementById('commentsList');
+            container.innerHTML = comments.map(c => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <strong>${c.name}</strong>
+                        <span class="comment-date">${new Date(c.date).toLocaleDateString()}</span>
+                    </div>
+                    <div class="comment-body">${c.comment}</div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

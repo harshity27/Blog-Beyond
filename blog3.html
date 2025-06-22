@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering CSS Animations</title>
+    <link rel="stylesheet" href="blog1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5f5f5;
+            --text-color: #333;
+            --border-color: #eaeaea;
+            --hover-color: #357abd;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --input-bg: #f8f9fa;
+        }
+
+        .blog-interactions {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px var(--shadow-color);
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-like, .btn-comment {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            background: white;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-like:hover, .btn-comment:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        }
+
+        .btn-like i, .btn-comment i {
+            font-size: 1.1rem;
+        }
+
+        .like-count, .comment-count {
+            font-weight: 600;
+        }
+
+        .comments-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--secondary-color);
+            border-radius: 12px;
+        }
+
+        .comments-list {
+            margin-bottom: 1.5rem;
+        }
+
+        .comment {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 12px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .comment:hover {
+            transform: translateY(-2px);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .comment-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .comment-text {
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px var(--shadow-color);
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--input-bg);
+            transition: all 0.3s ease;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+        }
+
+        .comment-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .comment-form button {
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .comment-form button:hover {
+            background: var(--hover-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        }
+
+        @keyframes likeAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .liked {
+            animation: likeAnimation 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mastering CSS Animations</h1>
+        <nav>
+            <a href="Website\trail.html">Home</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="blog-full">
+        <!-- <img src="images/css_animations.jpg" alt="CSS Animations" class="blog-image"> -->
+        <p class="blog-meta">Published on March 26, 2025 | By Blog & Beyond</p>
+
+        <h2>Introduction</h2>
+        <p>CSS animations bring life to your website, enhancing user engagement and providing smooth transitions. In this guide, we'll dive into the essentials of creating stunning CSS animations.</p>
+
+        <h2>1. Understanding Keyframes</h2>
+        <p>Keyframes define the animation sequence. You use the <code>@keyframes</code> rule to specify the style changes during the animation.</p>
+
+        <pre><code>@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}</code></pre>
+
+        <h2>2. Applying Animations</h2>
+        <p>Use the <code>animation</code> property to apply keyframes. This includes animation name, duration, timing function, delay, iteration count, and direction.</p>
+
+        <pre><code>div {
+    animation: slideIn 1s ease-in-out;
+}</code></pre>
+
+        <h2>3. Transition Effects</h2>
+        <p>CSS transitions allow smooth changes over time. Define properties and durations for transitions.</p>
+
+        <pre><code>button {
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #6fd981;
+}</code></pre>
+
+        <h2>4. Performance Considerations</h2>
+        <p>Use <code>transform</code> and <code>opacity</code> for better performance, and avoid animating properties that trigger layout recalculations.</p>
+
+        <h2>5. Advanced Techniques</h2>
+        <p>Explore advanced effects like staggered animations, complex easing curves, and using CSS variables for dynamic animations.</p>
+
+        <h2>Conclusion</h2>
+        <p>Mastering CSS animations enhances your web design skills and creates delightful user experiences. Experiment with different techniques and stay updated with modern CSS features.</p>
+
+        <div class="blog-interactions">
+            <div class="post-meta">
+                <button class="btn-like" id="likeButton">
+                    <i class="fas fa-heart"></i>
+                    <span class="like-count" id="likeCount">0</span>
+                </button>
+                <button class="btn-comment" onclick="toggleComments('blog3')">
+                    <i class="fas fa-comment"></i>
+                    <span class="comment-count" id="comment-count-blog3">0</span>
+                </button>
+            </div>
+            
+            <div class="comments-section" id="comments-section-blog3" style="display: none;">
+                <div class="comments-list" id="comments-list-blog3">
+                    <!-- Comments will be displayed here -->
+                </div>
+                <form class="comment-form" id="comment-form-blog3" onsubmit="handleComment(event, 'blog3')">
+                    <input type="text" placeholder="Your Name" required>
+                    <textarea placeholder="Your Comment" required></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+            </div>
+        </div>
+
+        <a href="Website\trail.html" class="back-button">Back to Home</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Blog & Beyond. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const blogId = 'blog3';
+            
+            // Load likes
+            const likes = localStorage.getItem(`${blogId}_likes`) || '0';
+            document.getElementById('likeCount').textContent = likes;
+            
+            // Load comments
+            const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+            document.getElementById('comment-count-blog3').textContent = comments.length;
+            displayComments(comments, blogId);
+            
+            // Set up event listeners
+            const likeButton = document.getElementById('likeButton');
+            if (likeButton) {
+                likeButton.addEventListener('click', () => handleLike(blogId));
+            }
+        });
+        
+        // Handle like button click
+        function handleLike(blogId) {
+            const likeCountElement = document.getElementById('likeCount');
+            const currentLikes = parseInt(localStorage.getItem(`${blogId}_likes`) || '0');
+            const newLikes = currentLikes + 1;
+            
+            // Update display
+            likeCountElement.textContent = newLikes;
+            
+            // Save to local storage
+            localStorage.setItem(`${blogId}_likes`, newLikes.toString());
+            
+            // Add animation class
+            likeCountElement.classList.add('liked');
+            setTimeout(() => likeCountElement.classList.remove('liked'), 1000);
+        }
+        
+        // Toggle comments section
+        function toggleComments(blogId) {
+            const commentsSection = document.getElementById(`comments-section-${blogId}`);
+            const isHidden = commentsSection.style.display === 'none';
+            commentsSection.style.display = isHidden ? 'block' : 'none';
+        }
+        
+        // Handle comment submission
+        function handleComment(event, blogId) {
+            event.preventDefault();
+            
+            const nameInput = document.querySelector(`#comment-form-${blogId} input[placeholder="Your Name"]`);
+            const commentInput = document.querySelector(`#comment-form-${blogId} textarea[placeholder="Your Comment"]`);
+            const name = nameInput.value.trim();
+            const comment = commentInput.value.trim();
+            
+            if (name && comment) {
+                // Get existing comments
+                const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+                
+                // Add new comment
+                comments.push({
+                    name: name,
+                    text: comment,
+                    date: new Date().toLocaleDateString()
+                });
+                
+                // Save to local storage
+                localStorage.setItem(`${blogId}_comments`, JSON.stringify(comments));
+                
+                // Update comment count
+                document.getElementById(`comment-count-${blogId}`).textContent = comments.length;
+                
+                // Clear form
+                nameInput.value = '';
+                commentInput.value = '';
+                
+                // Update display
+                displayComments(comments, blogId);
+            }
+        }
+        
+        // Display comments
+        function displayComments(comments, blogId) {
+            const commentsList = document.getElementById(`comments-list-${blogId}`);
+            commentsList.innerHTML = comments.map(comment => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.name}</span>
+                        <span class="comment-date">${comment.date}</span>
+                    </div>
+                    <div class="comment-text">${comment.text}</div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

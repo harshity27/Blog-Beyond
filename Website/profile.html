@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Berojgar Blogger</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Lato:300,400" rel="stylesheet">
+    <link rel="stylesheet" href="trial.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .profile-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 40px;
+        }
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+        }
+        .profile-info {
+            flex-grow: 1;
+        }
+        .profile-info h1 {
+            font-size: 2.5em;
+            margin: 0 0 10px 0;
+            color: #1e3c72;
+        }
+        .profile-info p {
+            font-size: 1.2em;
+            color: #666;
+            margin: 0 0 20px 0;
+        }
+        .liked-posts {
+            margin-top: 40px;
+        }
+        .liked-posts h2 {
+            color: #1e3c72;
+            margin-bottom: 30px;
+        }
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .post-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .post-card:hover {
+            transform: translateY(-5px);
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background: linear-gradient(45deg, #2a5298, #1e3c72);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .comments-section {
+            margin-top: 20px;
+        }
+        .comments-section h4 {
+            margin-bottom: 10px;
+            color: #1e3c72;
+        }
+        .comment {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #d9534f;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .delete-btn i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="trail.html">Berojgar Blogger</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="profile-section">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-info">
+                    <h1 id="userName">Loading...</h1>
+                    <p id="userEmail">Loading...</p>
+                    <button class="btn" onclick="window.location.href='trail.html'">Back to Home</button>
+                    <button class="btn" onclick="handleLogout()">Logout</button>
+                </div>
+            </div>
+
+            <div class="liked-posts">
+                <h2>Liked Posts</h2>
+                <div class="post-grid" id="likedPostsGrid"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'newLogin.html';
+        }
+
+        // Load user data
+        document.getElementById('userName').textContent = localStorage.getItem('userName') || 'Guest';
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const currentUser = users.find(user => user.name === localStorage.getItem('userName'));
+        if (currentUser) {
+            document.getElementById('userEmail').textContent = currentUser.email;
+        }
+
+        // Load liked posts
+        function loadLikedPosts() {
+            const userName = localStorage.getItem('userName');
+            const likedPosts = JSON.parse(localStorage.getItem(`${userName}_liked_posts`) || '[]');
+            const postsGrid = document.getElementById('likedPostsGrid');
+            
+            likedPosts.forEach(postId => {
+                const postCard = document.createElement('div');
+                postCard.className = 'post-card';
+                postCard.innerHTML = `
+                    <h3>${getPostTitle(postId)}</h3>
+                    <button class="btn" onclick="window.location.href='Website/${postId}.html'">Read More</button>
+                    <p>${getPostDescription(postId)}</p>
+                    <div class="comments-section">
+                        <h4>Comments</h4>
+                        <div class="comments-list" id="comments-${postId}"></div>
+                    </div>
+                `;
+                postsGrid.appendChild(postCard);
+                loadComments(postId);
+            });
+        }
+
+        function loadComments(postId) {
+            const comments = JSON.parse(localStorage.getItem(`${postId}_comments`) || '[]');
+            const commentsContainer = document.getElementById(`comments-${postId}`);
+            commentsContainer.innerHTML = comments.map((comment, index) => `
+                <div class="comment">
+                    <strong>${comment.name}</strong>
+                    <p>${comment.text}</p>
+                    <button class="delete-btn" onclick="deleteComment('${postId}', ${index})">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function deleteComment(postId, index) {
+            const comments = JSON.parse(localStorage.getItem(`${postId}_comments`) || '[]');
+            comments.splice(index, 1);
+            localStorage.setItem(`${postId}_comments`, JSON.stringify(comments));
+            loadComments(postId);
+        }
+
+        // Helper functions to get post details
+        function getPostTitle(postId) {
+            const titles = {
+                blog1: 'Innovative Web Design Trends',
+                blog2: 'Speed Optimization Techniques',
+                blog3: 'Mastering CSS Animations',
+                blog4: 'SEO Best Practices in 2025',
+                blog5: 'Understanding JavaScript ES6',
+                blog6: 'Effective UI/UX Design',
+                blog7: 'Responsive Mobile Layouts',
+                blog8: 'Integrating Social Media',
+                blog9: 'Content Strategy Essentials',
+                blog10: 'Future of Artificial Intelligence',
+                blog11: 'Cloud Computing Demystified',
+                blog12: 'Effective Digital Marketing',
+                blog13: 'Building a Personal Brand',
+                blog14: 'Modern JavaScript Frameworks',
+                blog15: 'Trends in Mobile App Development'
+            };
+            return titles[postId] || 'Unknown Post';
+        }
+
+        function getPostDescription(postId) {
+            const descriptions = {
+                blog1: 'Explore the cutting-edge trends that are transforming the web design world today.',
+                blog2: 'Learn practical techniques to speed up your website and improve user experience.',
+                blog3: 'Discover how to create smooth animations that captivate your audience.',
+                blog4: 'Stay ahead of the curve with these essential SEO tips for modern websites.',
+                blog5: 'Dive into the new features of ES6 and how they simplify coding in JavaScript.',
+                blog6: 'Learn the secrets behind a user-friendly design that keeps visitors engaged.',
+                blog7: 'Tips and tricks to create mobile layouts that provide a seamless experience.',
+                blog8: 'Boost engagement by integrating your blog with social media platforms.',
+                blog9: 'Learn how to develop a winning content strategy that drives traffic.',
+                blog10: 'An insightful look into how AI is shaping technology and society.',
+                blog11: 'Everything you need to know about cloud computing in simple terms.',
+                blog12: 'Strategies to amplify your online presence through digital marketing.',
+                blog13: 'Tips on how to build and maintain a compelling personal brand online.',
+                blog14: 'An overview of the most popular JavaScript frameworks in use today.',
+                blog15: 'Stay updated with the latest trends and tools in mobile application development.'
+            };
+            return descriptions[postId] || 'No description available';
+        }
+
+        function handleLogout() {
+            localStorage.setItem('isLoggedIn', 'false');
+            localStorage.removeItem('userName');
+            window.location.href = 'newLogin.html';
+        }
+
+        // Load liked posts when page loads
+        loadLikedPosts();
+    </script>
+</body>
+</html>

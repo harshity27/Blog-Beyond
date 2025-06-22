@@ -1,0 +1,104 @@
+/* Like and Comment Styles */
+.post-meta {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0;
+}
+
+.btn-like, .btn-comment {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.btn-like:hover, .btn-comment:hover {
+  color: #333;
+}
+
+.btn-like i {
+  color: #e74c3c;
+}
+
+.btn-like.liked i {
+  animation: heartBeat 1s;
+}
+
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.comments-section {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.comments-list {
+  margin-bottom: 15px;
+}
+
+.comment {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.comment strong {
+  color: #333;
+  margin-right: 10px;
+}
+
+.comment p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.comment small {
+  color: #999;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-form input,
+.comment-form textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.comment-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.comment-form button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comment-form button:hover {
+  background-color: #2980b9;
+} 

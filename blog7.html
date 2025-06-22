@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Art of Street Food</title>
+  <link rel="stylesheet" href="blog1.css" />
+  <style>
+    .like-button {
+      background: linear-gradient(135deg, #b253de, #d84453);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 138, 0, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .like-button:hover {
+      background: linear-gradient(135deg, #d19d3e, #abc248);
+      box-shadow: 0 0 20px rgba(255, 138, 0, 0.5);
+      transform: translateY(-3px);
+    }
+
+    .like-button.liked {
+      animation: pulse 0.5s ease;
+    }
+
+    .like-counter {
+      background: rgba(15, 15, 35, 0.7);
+      border-radius: 16px;
+      padding: 15px 25px;
+      margin-bottom: 20px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid rgba(255, 138, 0, 0.3);
+      box-shadow: 0 0 20px rgba(255, 138, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .like-counter:hover {
+      box-shadow: 0 0 30px rgba(255, 138, 0, 0.4);
+      transform: translateY(-5px);
+    }
+
+    .like-count-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #ff8a00;
+      text-shadow: 0 0 10px rgba(255, 138, 0, 0.6);
+    }
+
+    .like-count-label {
+      font-size: 1rem;
+      color: #fff;
+      margin-top: 5px;
+    }
+
+    .comment-form input,
+    .comment-form textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .submit-button {
+      background: #e52e71;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .submit-button:hover {
+      background: #ff8a00;
+    }
+
+    .comment {
+      background-color: #f7f7f7;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>The Art of Street Food: A Culinary Journey</h1>
+    <nav>
+      <a href="Website/trail.html">Home</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="blog-full">
+    <!-- <img src="images/street_food.jpg" alt="Street Food" class="blog-image" /> -->
+    <p class="blog-meta">Published on June 21, 2025 | By Blog &beyond</p>
+
+    <h2>Introduction</h2>
+    <p>From the smoky alleyways of Bangkok to the bustling stalls of Mexico City, street food is where culture meets flavor. It’s fast, affordable, and often unforgettable — a true taste of a place’s soul.</p>
+
+    <h2>1. A Global Love Affair</h2>
+    <p>Every country has its own street food identity — whether it's India’s spicy chaat, Turkey’s doner kebabs, or Japan’s takoyaki. These dishes reflect centuries of tradition and innovation.</p>
+
+    <h2>2. Made for the People</h2>
+    <p>Street food is created with the masses in mind. It’s local, accessible, and rooted in real communities. Vendors often serve the same spot for decades, becoming neighborhood icons.</p>
+
+    <h2>3. Flavors You Can’t Replicate</h2>
+    <p>There’s something about the sear of a roadside grill, the smoke in the air, and the freshness of ingredients cooked in front of you. The experience is as much a part of the flavor as the recipe.</p>
+
+    <h2>4. Supporting Small Businesses</h2>
+    <p>When you eat street food, you're often supporting family-run stalls and entrepreneurs. It’s an act of delicious activism — helping local economies thrive one bite at a time.</p>
+
+    <h2>Conclusion</h2>
+    <p>Whether you’re a food blogger, traveler, or just hungry, exploring street food is a journey worth taking. It’s not just about what’s on your plate, but the stories, smells, and sights that come with it.</p>
+
+    <div class="blog-interactions">
+      <div class="like-section">
+        <div class="like-counter">
+          <span class="like-count-number" id="likeCountDisplay">0</span>
+          <span class="like-count-label">Likes</span>
+        </div>
+        <button id="likeButton" class="like-button">
+          <span class="like-icon">🍜</span>
+          <span id="likeCount">0</span> Likes
+        </button>
+      </div>
+
+      <div class="comment-section">
+        <h3>Comments</h3>
+        <div id="commentsList" class="comments-list"></div>
+        <form id="commentForm" class="comment-form">
+          <input type="text" id="commenterName" placeholder="Your Name" required />
+          <textarea id="commentText" placeholder="Your Comment" required></textarea>
+          <button type="submit" class="submit-button">Post Comment</button>
+        </form>
+      </div>
+    </div>
+
+    <a href="Website/trail.html" class="back-button">Back to Home</a>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Blog &beyond. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const blogId = 'blog9';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const likes = localStorage.getItem(`${blogId}_likes`) || '0';
+      document.getElementById('likeCount').textContent = likes;
+      document.getElementById('likeCountDisplay').textContent = likes;
+
+      const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+      displayComments(comments);
+
+      document.getElementById('likeButton').addEventListener('click', handleLike);
+      document.getElementById('commentForm').addEventListener('submit', handleComment);
+    });
+
+    function handleLike() {
+      let count = parseInt(localStorage.getItem(`${blogId}_likes`) || '0') + 1;
+      localStorage.setItem(`${blogId}_likes`, count);
+      document.getElementById('likeCount').textContent = count;
+      document.getElementById('likeCountDisplay').textContent = count;
+
+      const likeBtn = document.getElementById('likeButton');
+      likeBtn.classList.add('liked');
+      setTimeout(() => likeBtn.classList.remove('liked'), 1000);
+    }
+
+    function handleComment(e) {
+      e.preventDefault();
+      const name = document.getElementById('commenterName').value.trim();
+      const comment = document.getElementById('commentText').value.trim();
+
+      if (!name || !comment) return;
+
+      const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+      comments.push({ name, comment, date: new Date().toISOString() });
+      localStorage.setItem(`${blogId}_comments`, JSON.stringify(comments));
+
+      document.getElementById('commenterName').value = '';
+      document.getElementById('commentText').value = '';
+      displayComments(comments);
+    }
+
+    function displayComments(comments) {
+      const container = document.getElementById('commentsList');
+      container.innerHTML = comments.map(c => `
+        <div class="comment">
+          <div class="comment-header">
+            <strong>${c.name}</strong>
+            <span class="comment-date">${new Date(c.date).toLocaleDateString()}</span>
+          </div>
+          <div class="comment-body">${c.comment}</div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

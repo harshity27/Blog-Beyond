@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Renewable Energy: Powering a Sustainable Future</title>
+  <link rel="stylesheet" href="blog1.css" />
+  <style>
+    /* Like button styles */
+    .like-button {
+      background: linear-gradient(135deg, #cd6531, #64dd17);
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 200, 83, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .like-button:hover {
+      background: linear-gradient(135deg, #8b26a4, #d245b8);
+      box-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
+      transform: translateY(-3px);
+    }
+
+    .like-button.liked {
+      animation: pulse 0.5s ease;
+    }
+
+    .like-counter {
+      background: rgba(15, 35, 15, 0.7);
+      border-radius: 16px;
+      padding: 15px 25px;
+      margin-bottom: 20px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid rgba(0, 200, 83, 0.3);
+      box-shadow: 0 0 20px rgba(0, 200, 83, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .like-counter:hover {
+      box-shadow: 0 0 30px rgba(0, 200, 83, 0.4);
+      transform: translateY(-5px);
+    }
+
+    .like-count-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #00e676;
+      text-shadow: 0 0 10px rgba(0, 230, 118, 0.6);
+    }
+
+    .like-count-label {
+      font-size: 1rem;
+      color: #e0ffe0;
+      margin-top: 5px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Comment Section Styling */
+    .comment-section {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #121223;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 230, 118, 0.1);
+      color: #e0e0ff;
+    }
+
+    .comment-form .form-group {
+      margin-bottom: 15px;
+    }
+
+    .comment-form input,
+    .comment-form textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #1f1f3b;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .comment-form textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    .submit-button {
+      background: linear-gradient(135deg, #64dd17, #00c853);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-button:hover {
+      background: linear-gradient(135deg, #00c853, #64dd17);
+    }
+
+    .comments-list .comment {
+      background-color: #1f1f3b;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px rgba(0, 255, 150, 0.08);
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 8px;
+    }
+
+    .comment-body {
+      font-size: 1rem;
+      color: #e0e0ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Renewable Energy: Powering a Sustainable Future</h1>
+    <nav>
+      <a href="Website/trail.html">Home</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="blog-full">
+    <!-- <img src="images/renewable_energy.jpg" alt="Renewable Energy" class="blog-image" /> -->
+    <p class="blog-meta">Published on June 21, 2025 | By Berojgar Blogger</p>
+
+    <h2>Introduction</h2>
+    <p>Renewable energy is more than a buzzword — it's a critical solution to the world's growing energy demands and climate challenges. By tapping into natural sources like the sun, wind, and water, we can power the planet while protecting it.</p>
+
+    <h2>1. What is Renewable Energy?</h2>
+    <p>Renewable energy comes from resources that are naturally replenished, such as sunlight, wind, rain, tides, and geothermal heat. Unlike fossil fuels, these sources are clean, abundant, and sustainable.</p>
+
+    <h2>2. Types of Renewable Energy</h2>
+    <p><strong>Solar Power:</strong> Harnesses energy from the sun using panels.<br>
+       <strong>Wind Energy:</strong> Uses wind turbines to generate electricity.<br>
+       <strong>Hydropower:</strong> Converts the movement of water into energy.<br>
+       <strong>Geothermal:</strong> Taps into Earth's internal heat.<br>
+       <strong>Biomass:</strong> Converts organic materials into usable fuel.
+    </p>
+
+    <h2>3. Benefits of Going Green</h2>
+    <p>Renewable energy reduces carbon emissions, improves air quality, and decreases dependence on imported fuels. It also creates jobs and drives technological innovation.</p>
+
+    <h2>4. Challenges Ahead</h2>
+    <p>Despite rapid progress, challenges like high upfront costs, storage limitations, and infrastructure upgrades must be addressed to ensure a smooth transition to renewable power.</p>
+
+    <h2>Conclusion</h2>
+    <p>Renewable energy is not just the future — it’s the present. By investing in green technologies and embracing sustainable practices, we can build a cleaner, healthier, and more equitable world.</p>
+
+    <div class="blog-interactions">
+      <div class="like-section">
+        <div class="like-counter">
+          <span class="like-count-number" id="likeCountDisplay">0</span>
+          <span class="like-count-label">Likes</span>
+        </div>
+        <button id="likeButton" class="like-button">
+          <span class="like-icon">⚡</span>
+          <span id="likeCount">0</span> Likes
+        </button>
+      </div>
+
+      <div class="comment-section">
+        <h3>Comments</h3>
+        <div id="commentsList" class="comments-list"></div>
+        <form id="commentForm" class="comment-form">
+          <div class="form-group">
+            <input type="text" id="commenterName" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <textarea id="commentText" placeholder="Your Comment" required></textarea>
+          </div>
+          <button type="submit" class="submit-button">Post Comment</button>
+        </form>
+      </div>
+    </div>
+
+    <a href="Website/trail.html" class="back-button">Back to Home</a>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Berojgar Blogger. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const blogId = 'blog10';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const likes = localStorage.getItem(`${blogId}_likes`) || '0';
+      document.getElementById('likeCount').textContent = likes;
+      document.getElementById('likeCountDisplay').textContent = likes;
+
+      const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+      displayComments(comments);
+
+      document.getElementById('likeButton').addEventListener('click', handleLike);
+      document.getElementById('commentForm').addEventListener('submit', handleComment);
+    });
+
+    function handleLike() {
+      let count = parseInt(localStorage.getItem(`${blogId}_likes`) || '0') + 1;
+      localStorage.setItem(`${blogId}_likes`, count);
+      document.getElementById('likeCount').textContent = count;
+      document.getElementById('likeCountDisplay').textContent = count;
+
+      const likeBtn = document.getElementById('likeButton');
+      likeBtn.classList.add('liked');
+      setTimeout(() => likeBtn.classList.remove('liked'), 1000);
+    }
+
+    function handleComment(e) {
+      e.preventDefault();
+      const name = document.getElementById('commenterName').value.trim();
+      const comment = document.getElementById('commentText').value.trim();
+
+      if (!name || !comment) return;
+
+      const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+      comments.push({ name, comment, date: new Date().toISOString() });
+      localStorage.setItem(`${blogId}_comments`, JSON.stringify(comments));
+
+      document.getElementById('commenterName').value = '';
+      document.getElementById('commentText').value = '';
+      displayComments(comments);
+    }
+
+    function displayComments(comments) {
+      const container = document.getElementById('commentsList');
+      container.innerHTML = comments.map(c => `
+        <div class="comment">
+          <div class="comment-header">
+            <strong>${c.name}</strong>
+            <span class="comment-date">${new Date(c.date).toLocaleDateString()}</span>
+          </div>
+          <div class="comment-body">${c.comment}</div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

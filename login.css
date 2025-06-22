@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-container {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    padding: 35px;
+  
+  }
+  
+  .login-container:hover {
+    transform: translateY(5px);
+  } 
+  
+  .login-form h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #4a4a4a;
+    font-weight: 600;
+  }
+  
+  .input-field {
+    margin-bottom: 22px;
+  }
+  
+  .input-field label {
+    font-size: 14px;
+    color: #3c3d4b;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  
+  .input-field input {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border: 2px solid #1d1c1f;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: #e0e4e8;
+  }
+  
+  .input-field input:focus {
+    border-color: #15be29;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(25, 162, 59, 0.1);
+    background-color: #ffffff;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  
+   .login-btn:hover {
+    background: linear-gradient(to right, #5a6fd1, #6a4292);
+    transform: translateY(-2px);
+   }
+  
+  .signup-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .signup-link a {
+    color: #ed1d9a;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  
+  .signup-link a:hover {
+    color: #186fcc;
+    text-decoration: none;
+}

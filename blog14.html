@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>News in the Digital Age</title>
+  <link rel="stylesheet" href="blog1.css" />
+  <style>
+    /* Like Button Styles */
+    .like-button {
+      background: linear-gradient(135deg, #ff6f61, #cdc225);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 61, 0, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .like-button:hover {
+      background: linear-gradient(135deg, #ec4747, #f733cc);
+      box-shadow: 0 0 20px rgba(255, 61, 0, 0.5);
+      transform: translateY(-3px);
+    }
+
+    .like-button.liked {
+      animation: pulse 0.5s ease;
+    }
+
+    .like-counter {
+      background: rgba(35, 15, 15, 0.7);
+      border-radius: 16px;
+      padding: 15px 25px;
+      margin-bottom: 20px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid rgba(255, 61, 0, 0.3);
+      box-shadow: 0 0 20px rgba(255, 61, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .like-counter:hover {
+      box-shadow: 0 0 30px rgba(255, 61, 0, 0.4);
+      transform: translateY(-5px);
+    }
+
+    .like-count-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #ff7043;
+      text-shadow: 0 0 10px rgba(255, 87, 34, 0.6);
+    }
+
+    .like-count-label {
+      font-size: 1rem;
+      color: #ffe0e0;
+      margin-top: 5px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Comment Section Styles */
+    .comment-section {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #121223;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 61, 0, 0.1);
+      color: #e0e0ff;
+    }
+
+    .comment-form .form-group {
+      margin-bottom: 15px;
+    }
+
+    .comment-form input,
+    .comment-form textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #1f1f3b;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .comment-form textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    .submit-button {
+      background: linear-gradient(135deg, #ff6f61, #cdc225);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-button:hover {
+      background: linear-gradient(135deg, #ec4747, #f733cc);
+    }
+
+    .comments-list .comment {
+      background-color: #1f1f3b;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px rgba(255, 87, 34, 0.08);
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 8px;
+    }
+
+    .comment-body {
+      font-size: 1rem;
+      color: #e0e0ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>News in the Digital Age</h1>
+    <nav>
+      <a href="Website/trail.html">Home</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="blog-full">
+    <!-- <img src="images/news_digital.jpg" alt="News in the Digital Age" class="blog-image" /> -->
+    <p class="blog-meta">Published on June 21, 2025 | By Berojgar Blogger</p>
+
+    <h2>Introduction</h2>
+    <p>In the digital age, news spreads faster than ever before. With a few clicks, information can reach millions across the globe — but with that speed comes great responsibility. Let's explore how the news industry is evolving in the 21st century.</p>
+
+    <h2>1. Rise of Online Journalism</h2>
+    <p>Traditional newspapers are giving way to digital platforms. From mobile apps to social media threads, readers now consume news in real-time, often personalized through algorithms.</p>
+
+    <h2>2. Social Media's Double-Edged Sword</h2>
+    <p>Platforms like Twitter and Facebook have transformed news delivery — enabling citizen journalism but also fueling misinformation. Speed often trumps accuracy, and the consequences can be widespread.</p>
+
+    <h2>3. The Fight Against Fake News</h2>
+    <p>Fact-checking initiatives and AI-driven moderation tools have emerged to combat the flood of fake news. Still, critical thinking and media literacy are more important than ever for readers.</p>
+
+    <h2>4. Journalism in the Age of AI</h2>
+    <p>AI can now write headlines, generate summaries, and even detect bias — but ethical concerns remain. Can automation ever replace human judgment and investigation?</p>
+
+    <h2>5. Subscription Models and Independent Media</h2>
+    <p>Many outlets are shifting to subscription models or crowdfunding to maintain independence. This has sparked a renaissance in investigative journalism, supported directly by readers.</p>
+
+    <h2>Conclusion</h2>
+    <p>The digital age has reshaped how news is made, shared, and consumed. While the landscape is more dynamic than ever, ensuring truth, ethics, and accessibility remains vital for the future of journalism.</p>
+
+    <div class="blog-interactions">
+      <div class="like-section">
+        <div class="like-counter">
+          <span class="like-count-number" id="likeCountDisplay">0</span>
+          <span class="like-count-label">Likes</span>
+        </div>
+        <button id="likeButton" class="like-button">
+          <span class="like-icon">📰</span>
+          <span id="likeCount">0</span> Likes
+        </button>
+      </div>
+
+      <div class="comment-section">
+        <h3>Comments</h3>
+        <div id="commentsList" class="comments-list"></div>
+        <form id="commentForm" class="comment-form">
+          <div class="form-group">
+            <input type="text" id="commenterName" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <textarea id="commentText" placeholder="Your Comment" required></textarea>
+          </div>
+          <button type="submit" class="submit-button">Post Comment</button>
+        </form>
+      </div>
+    </div>
+
+    <a href="Website/trail.html" class="back-button">Back to Home</a>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Berojgar Blogger. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const blogId = 'blog11';
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const likes = localStorage.getItem(`${blogId}_likes`) || '0';
+      document.getElementById('likeCount').textContent = likes;
+      document.getElementById('likeCountDisplay').textContent = likes;
+
+      const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+      displayComments(comments);
+
+      document.getElementById('likeButton').addEventListener('click', handleLike);
+      document.getElementById('commentForm').addEventListener('submit', handleComment);
+    });
+
+    function handleLike() {
+      const count = parseInt(localStorage.getItem(`${blogId}_likes`) || '0') + 1;
+      localStorage.setItem(`${blogId}_likes`, count);
+      document.getElementById('likeCount').textContent = count;
+      document.getElementById('likeCountDisplay').textContent = count;
+
+      const likeBtn = document.getElementById('likeButton');
+      likeBtn.classList.add('liked');
+      setTimeout(() => likeBtn.classList.remove('liked'), 1000);
+    }
+
+    function handleComment(e) {
+      e.preventDefault();
+      const name = document.getElementById('commenterName').value.trim();
+      const comment = document.getElementById('commentText').value.trim();
+
+      if (!name || !comment) return;
+
+      const comments = JSON.parse(localStorage.getItem(`${blogId}_comments`) || '[]');
+      comments.push({ name, comment, date: new Date().toISOString() });
+      localStorage.setItem(`${blogId}_comments`, JSON.stringify(comments));
+
+      document.getElementById('commenterName').value = '';
+      document.getElementById('commentText').value = '';
+      displayComments(comments);
+    }
+
+    function displayComments(comments) {
+      const container = document.getElementById('commentsList');
+      container.innerHTML = comments.map(c => `
+        <div class="comment">
+          <div class="comment-header">
+            <strong>${c.name}</strong>
+            <span class="comment-date">${new Date(c.date).toLocaleDateString()}</span>
+          </div>
+          <div class="comment-body">${c.comment}</div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>
